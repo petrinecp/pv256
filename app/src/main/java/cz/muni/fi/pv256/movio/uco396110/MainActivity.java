@@ -13,11 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (BuildConfig.DEBUG) {
-            App myApp = new App();
-            myApp.initStrictMode();
-        }
     }
 
     @Override
@@ -41,6 +36,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

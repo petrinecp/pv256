@@ -5,7 +5,17 @@ import android.os.Build;
 import android.os.StrictMode;
 
 public class App extends Application {
-    public void initStrictMode() {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        if (BuildConfig.DEBUG) {
+            initStrictMode();
+        }
+    }
+
+    private void initStrictMode() {
         StrictMode.ThreadPolicy.Builder tpb = new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog();
