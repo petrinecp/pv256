@@ -1,8 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/primary_deep_purple</item>
+        <item name="colorPrimaryDark">@color/primary_dark_deep_purple</item>
+        <item name="colorAccent">@color/accent_amber</item>
+    </style>
+
+    <style name="AppThemeAlternative" parent="@style/AppTheme">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryDark">@color/primary_dark_green</item>
+        <item name="colorAccent">@color/accent_yellow</item>
     </style>
 
 </resources>
