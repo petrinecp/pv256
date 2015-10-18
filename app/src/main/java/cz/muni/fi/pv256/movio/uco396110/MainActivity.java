@@ -1,11 +1,22 @@
 package cz.muni.fi.pv256.movio.uco396110;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import cz.muni.fi.pv256.movio.uco396110.model.Film;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +24,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        List<Film> films = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            films.add(Film.createRandomFilm("Film " + i));
+        }
+
+        GridView gridView = (GridView) findViewById(R.id.gridView);
+        View emptyView = findViewById(R.id.gridEmptyLayout);
+        gridView.setEmptyView(emptyView);
+        FilmAdapter filmAdapter = new FilmAdapter(this, films);
+        gridView.setAdapter(filmAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     @Override
