@@ -1,47 +1,43 @@
 package cz.muni.fi.pv256.movio.uco396110;
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.StrictMode;
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import cz.muni.fi.pv256.movio.uco396110.model.Film;
+import cz.muni.fi.pv256.movio.uco396110.fragments.FilmsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.films_list);
 
-        List<Film> films = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            films.add(Film.createRandomFilm("Film " + i));
-        }
+        if (findViewById(R.id.fragment_container) != null) {
 
-        GridView gridView = (GridView) findViewById(R.id.gridView);
-        View emptyView = findViewById(R.id.gridEmptyLayout);
-        gridView.setEmptyView(emptyView);
-        FilmAdapter filmAdapter = new FilmAdapter(this, films);
-        gridView.setAdapter(filmAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent appInfo = new Intent(MainActivity.this, FilmDetailActivity.class);
-                startActivity(appInfo);
+            if (savedInstanceState != null) {
+                return;
             }
-        });
+
+            FilmsFragment filmsFragment = new FilmsFragment();
+            filmsFragment.setArguments(getIntent().getExtras());
+
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, filmsFragment).commit();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+
+        if(fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
