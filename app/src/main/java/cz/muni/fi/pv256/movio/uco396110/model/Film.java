@@ -16,32 +16,50 @@ public class Film implements Parcelable {
     String coverPath;
     String title;
 
-    public Film(long releaseDate, String coverPath, String title) {
-        this.releaseDate = releaseDate;
-        this.coverPath = coverPath;
+//    public Film(String title, long releaseDate, String coverPath) {
+//        this.releaseDate = releaseDate;
+//        this.coverPath = coverPath;
+//        this.title = title;
+//    }
+
+    public Film(String title, String dateString, String coverPath) {
+        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+
+        long milliseconds;
+        try {
+            Date d = f.parse(dateString);
+            milliseconds = d.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            milliseconds = 0;
+        }
+
         this.title = title;
+        this.releaseDate = milliseconds;
+        this.coverPath = coverPath;
+//        return new Film(title, milliseconds, coverPath);
     }
 
-    public static Film createFilm(String dateString, String coverPath, String title) throws ParseException {
-//        SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
-//        Date d = f.parse(dateString);
-//        long milliseconds = d.getTime();
-        return null;
+    public long getReleaseDate() {
+        return releaseDate;
     }
 
-    public static Film createRandomFilm(String title) {
-        GregorianCalendar gc = new GregorianCalendar();
-        int year = randBetween(1900, 2010);
-        gc.set(gc.YEAR, year);
-        int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
-        gc.set(gc.DAY_OF_YEAR, dayOfYear);
-
-        return new Film(gc.getTimeInMillis(), "", title);
+    public String getTitle() {
+        return title;
     }
+//    public static Film createRandomFilm(String title) {
+//        GregorianCalendar gc = new GregorianCalendar();
+//        int year = randBetween(1900, 2010);
+//        gc.set(gc.YEAR, year);
+//        int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
+//        gc.set(gc.DAY_OF_YEAR, dayOfYear);
+//
+//        return new Film(gc.getTimeInMillis(), "", title);
+//    }
 
-    private static int randBetween(int start, int end) {
-        return start + (int)Math.round(Math.random() * (end - start));
-    }
+//    private static int randBetween(int start, int end) {
+//        return start + (int)Math.round(Math.random() * (end - start));
+//    }
 
     @Override
     public String toString() {
