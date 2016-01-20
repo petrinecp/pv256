@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Nastavenie</string>
+    <string name="title_activity_film_detail">FilmDetailActivity</string>
+    <string name="empty_message">Žiadne dáta</string>
+    <string name="header_in_theatres">Teraz v kinách</string>
+    <string name="header_most_popular">Najpopulárnejšie</string>
+</resources>

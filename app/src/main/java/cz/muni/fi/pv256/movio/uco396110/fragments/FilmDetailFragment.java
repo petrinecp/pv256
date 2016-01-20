@@ -1,20 +1,25 @@
 package cz.muni.fi.pv256.movio.uco396110.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import cz.muni.fi.pv256.movio.uco396110.FilmsStore;
+import com.squareup.picasso.Picasso;
+
 import cz.muni.fi.pv256.movio.uco396110.R;
 import cz.muni.fi.pv256.movio.uco396110.model.Film;
+import cz.muni.fi.pv256.movio.uco396110.service.FilmsService;
+import cz.muni.fi.pv256.movio.uco396110.service.TheMovieDbFilmsServiceImpl;
 
-/**
- * Created by peter on  25.10. .
- */
 public class FilmDetailFragment extends Fragment {
     public final static String ARG_FILM = "SelectedFilm";
     private Parcelable mCurrentFilm = null;
@@ -29,9 +34,10 @@ public class FilmDetailFragment extends Fragment {
             mCurrentFilm = savedInstanceState.getParcelable(ARG_FILM);
         }
 
-        if (mCurrentFilm == null && FilmsStore.sFilms.length > 0) {
-            mCurrentFilm = FilmsStore.sFilms[0].getFilm();
-        }
+//        FilmsService filmsService = new TheMovieDbFilmsServiceImpl();
+//        if (mCurrentFilm == null && filmsService.getFilmsCount() > 0) {
+//            mCurrentFilm = FilmsStore.sFilms[0].getFilm();
+//        }
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.film_detail_fragment, container, false);
@@ -57,12 +63,19 @@ public class FilmDetailFragment extends Fragment {
 
     public void updateFilmDetailView(Parcelable selectedFilm) {
         Film film = (Film) selectedFilm;
+        Context context = getActivity().getApplicationContext();
+
+        ImageView backdropImageView = (ImageView) getView().findViewById(R.id.backdrop);
+        Picasso.with(context).load(film.getBackdropPath()).fit().centerCrop().into(backdropImageView);
+
+        ImageView posterImageView = (ImageView) getView().findViewById(R.id.posterDetail);
+        Picasso.with(context).load(film.getCoverPath()).into(posterImageView);
 
         TextView filmTitleTextView = (TextView) getView().findViewById(R.id.filmTitle);
         filmTitleTextView.setText(film.getTitle());
 
         TextView filmReleaseDateTextView = (TextView) getView().findViewById(R.id.releaseDate);
-        filmReleaseDateTextView.setText(String.valueOf(film.getReleaseDate()));
+        filmReleaseDateTextView.setText(String.valueOf(film.getLocalizedReleaseDate()));
 
         mCurrentFilm = selectedFilm;
     }

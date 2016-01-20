@@ -1,69 +1,88 @@
 package cz.muni.fi.pv256.movio.uco396110.model;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Locale;
 
-/**
- * Created by peter on  18.10. .
- */
 public class Film implements Parcelable {
-    long releaseDate;
-    String coverPath;
-    String title;
+    private static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
+    private long mReleaseDate;
 
-//    public Film(String title, long releaseDate, String coverPath) {
-//        this.releaseDate = releaseDate;
-//        this.coverPath = coverPath;
-//        this.title = title;
-//    }
+    @SerializedName("original_title")
+    private String mTitle;
+
+    @SerializedName("release_date")
+    private String mReleaseDateString;
+
+    private String mLocalizedReleaseDate;
+
+    @SerializedName("poster_path")
+    private String mCoverPath;
+
+    @SerializedName("backdrop_path")
+    private String mBackdropPath;
 
     public Film(String title, String dateString, String coverPath) {
-        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
-
-        long milliseconds;
-        try {
-            Date d = f.parse(dateString);
-            milliseconds = d.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-            milliseconds = 0;
-        }
-
-        this.title = title;
-        this.releaseDate = milliseconds;
-        this.coverPath = coverPath;
-//        return new Film(title, milliseconds, coverPath);
+        mTitle = title;
+        mReleaseDateString = dateString;
+        mCoverPath = coverPath;
     }
 
     public long getReleaseDate() {
-        return releaseDate;
+        if (mReleaseDate == 0) {
+            SimpleDateFormat f = new SimpleDateFormat(DATE_FORMAT_STRING);
+            long milliseconds;
+            try {
+                Date d = f.parse(mReleaseDateString);
+                milliseconds = d.getTime();
+            } catch (ParseException e) {
+                milliseconds = 0;
+            }
+            mReleaseDate = milliseconds;
+        }
+
+        return mReleaseDate;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
-//    public static Film createRandomFilm(String title) {
-//        GregorianCalendar gc = new GregorianCalendar();
-//        int year = randBetween(1900, 2010);
-//        gc.set(gc.YEAR, year);
-//        int dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
-//        gc.set(gc.DAY_OF_YEAR, dayOfYear);
-//
-//        return new Film(gc.getTimeInMillis(), "", title);
-//    }
 
-//    private static int randBetween(int start, int end) {
-//        return start + (int)Math.round(Math.random() * (end - start));
-//    }
+    public String getLocalizedReleaseDate() {
+        DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+        String localPattern  = ((SimpleDateFormat)formatter).toLocalizedPattern();
+        Date date = new Date(getReleaseDate());
+        SimpleDateFormat df = new SimpleDateFormat(localPattern);
+        return df.format(date);
+    }
+
+    public String getCoverPath() {
+        return mCoverPath;
+    }
+
+    public void setCoverPath(String coverPath) {
+        mCoverPath = coverPath;
+    }
+
+    public String getBackdropPath() {
+        return mBackdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        mBackdropPath = backdropPath;
+    }
 
     @Override
     public String toString() {
-        return title;
+        return mTitle;
     }
 
     @Override
@@ -73,15 +92,15 @@ public class Film implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.releaseDate);
-        dest.writeString(this.coverPath);
-        dest.writeString(this.title);
+        dest.writeLong(this.mReleaseDate);
+        dest.writeString(this.mCoverPath);
+        dest.writeString(this.mTitle);
     }
 
     protected Film(Parcel in) {
-        this.releaseDate = in.readLong();
-        this.coverPath = in.readString();
-        this.title = in.readString();
+        this.mReleaseDate = in.readLong();
+        this.mCoverPath = in.readString();
+        this.mTitle = in.readString();
     }
 
     public static final Parcelable.Creator<Film> CREATOR = new Parcelable.Creator<Film>() {

@@ -1,6 +1,7 @@
 package cz.muni.fi.pv256.movio.uco396110;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
 
 import java.util.List;
 
-/**
- * Created by peter on  18.10. .
- */
 public class FilmAdapter extends BaseAdapter implements StickyGridHeadersSimpleAdapter {
 
     private Context mContext;
@@ -60,15 +59,16 @@ public class FilmAdapter extends BaseAdapter implements StickyGridHeadersSimpleA
             holder = (HeaderViewHolder) convertView.getTag();
         }
 
+        Resources resources = parent.getContext().getResources();
         FilmAdapterData item = mData.get(position);
         String headerText;
         switch (item.getCategory()) {
             case IN_THEATRES:
-                headerText = "In Theatres Now";
+                headerText = resources.getString(R.string.header_in_theatres);
                 break;
             default:
             case MOST_POPULAR:
-                headerText = "Most Popular";
+                headerText = resources.getString(R.string.header_most_popular);
                 break;
         }
 
@@ -80,24 +80,28 @@ public class FilmAdapter extends BaseAdapter implements StickyGridHeadersSimpleA
 
     private static class ViewHolder {
         ImageView imageView;
-        TextView textView;
+//        TextView textView;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            Log.i("", "inflate radku " + position);
+            if(BuildConfig.LOGGING_ENABLED) {
+                Log.i("", "inflate radku " + position);
+            }
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.grid_single, parent, false);
             ViewHolder holder = new ViewHolder();
             holder.imageView = (ImageView) convertView.findViewById(R.id.grid_image);
-            holder.textView = (TextView) convertView.findViewById(R.id.grid_text);
             convertView.setTag(holder);
         } else {
-            Log.i("","recyklace radku " + position);
+            if(BuildConfig.LOGGING_ENABLED) {
+                Log.i("", "recyklace radku " + position);
+            }
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
-        holder.textView.setText(mData.get(position).toString());
+        String posterUrl = mData.get(position).getFilm().getCoverPath();
+        Picasso.with(parent.getContext()).load(posterUrl).into(holder.imageView);
         return convertView;
     }
 

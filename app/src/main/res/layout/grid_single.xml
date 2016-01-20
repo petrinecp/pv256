@@ -7,18 +7,18 @@
               android:gravity="center">
     <ImageView
         android:id="@+id/grid_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
         android:src="@android:drawable/ic_menu_gallery">
     </ImageView>
 
-    <TextView
-        android:id="@+id/grid_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:textSize="12sp"
-        android:text="Film Title"
-        android:textColor="@color/primary_deep_purple">
-    </TextView>
+    <!--<TextView-->
+        <!--android:id="@+id/grid_text"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="2dp"-->
+        <!--android:textSize="12sp"-->
+        <!--android:text="Film Title"-->
+        <!--android:textColor="@color/primary">-->
+    <!--</TextView>-->
 </LinearLayout>

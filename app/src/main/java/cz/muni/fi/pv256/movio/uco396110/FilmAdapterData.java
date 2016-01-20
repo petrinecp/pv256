@@ -1,10 +1,9 @@
 package cz.muni.fi.pv256.movio.uco396110;
 
+import android.graphics.Bitmap;
+
 import cz.muni.fi.pv256.movio.uco396110.model.Film;
 
-/**
- * Created by peter on  18.1. .
- */
 public class FilmAdapterData {
     private FilmCategory mCategory;
     private Film mFilm;
@@ -12,6 +11,7 @@ public class FilmAdapterData {
     public FilmAdapterData(FilmCategory category, Film film) {
         mCategory = category;
         mFilm = film;
+
     }
 
     public FilmCategory getCategory() {
