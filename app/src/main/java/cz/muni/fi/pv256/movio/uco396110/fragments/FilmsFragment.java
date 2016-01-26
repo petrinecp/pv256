@@ -73,9 +73,11 @@ public class FilmsFragment extends Fragment {
             }
         });
 
-        // start loading
-        mLoader = new FilmsLoaderTask(new TheMovieDbFilmsServiceImpl());
-        mLoader.execute();
+        if (mAdapter.getCount() == 0) {
+            // start loading
+            mLoader = new FilmsLoaderTask(new TheMovieDbFilmsServiceImpl());
+            mLoader.execute();
+        }
 
         return view;
     }

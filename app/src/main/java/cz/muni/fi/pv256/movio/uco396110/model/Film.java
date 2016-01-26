@@ -57,7 +57,7 @@ public class Film implements Parcelable {
     }
 
     public String getLocalizedReleaseDate() {
-        DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+        DateFormat formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
         String localPattern  = ((SimpleDateFormat)formatter).toLocalizedPattern();
         Date date = new Date(getReleaseDate());
         SimpleDateFormat df = new SimpleDateFormat(localPattern);

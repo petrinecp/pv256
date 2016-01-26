@@ -31,30 +31,36 @@ public class TheMovieDbFilmsServiceImpl implements FilmsService {
     private static final String GET_IN_THEATRES_URL = SERVER_URL + IN_THEATRES_API_URL + "&" + API_KEY_PARAM + "=" + API_KEY;
     private static final String GET_MOST_POPULAR_URL = SERVER_URL + MOST_POPULAR_API_URL + "&" + API_KEY_PARAM + "=" + API_KEY;
     private FilmsStorage mFilmsStorage;
+    private static final int NUMBER_OF_FILMS_IN_CATEGORY = 6;
 
     public TheMovieDbFilmsServiceImpl() {
         mFilmsStorage = FilmsStorage.getInstance();
     }
 
     @Override
-    public List<Film> getFilmsInTheatre() {
-//        FilmsStorage filmsStorage = FilmsStorage.getInstance();
-//        List<FilmAdapterData> films = filmsStorage.getFilmsInTheatre();
-//        if (films == null) {
-//            try {
-//                Update();
-//                films = filmsStorage.getFilmsInTheatre();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+    public List<Film> getFilmsInTheatre() throws IOException {
+        return getFilmsInTheatre(null);
+    }
 
-        return null;
+    public List<Film> getFilmsInTheatre(Integer limit) throws IOException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = dateFormat.format(calendar.getTime());
+        calendar.add(Calendar.MONTH, -1);
+        String monthAgoDate = dateFormat.format(calendar.getTime());
+
+        List<Film> filmsInTheatre = Fetch(MessageFormat.format(GET_IN_THEATRES_URL, monthAgoDate, currentDate));
+        return limit == null ? filmsInTheatre : filmsInTheatre.subList(0, limit);
     }
 
     @Override
-    public List<Film> getMostPopularFilms() {
-        return null;
+    public List<Film> getMostPopularFilms() throws IOException {
+        return getMostPopularFilms(null);
+    }
+
+    public List<Film> getMostPopularFilms(Integer limit) throws IOException {
+        List<Film> mostPopularFilms = Fetch(GET_MOST_POPULAR_URL);
+        return limit == null ? mostPopularFilms : mostPopularFilms.subList(0, limit);
     }
 
     @Override
@@ -70,17 +76,14 @@ public class TheMovieDbFilmsServiceImpl implements FilmsService {
 
     @Override
     public void Update() throws IOException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = dateFormat.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, -1);
-        String monthAgoDate = dateFormat.format(calendar.getTime());
-        Fetch(FilmCategory.IN_THEATRES, MessageFormat.format(GET_IN_THEATRES_URL, monthAgoDate, currentDate));
+        List<Film> filmsInTheatre = getFilmsInTheatre(NUMBER_OF_FILMS_IN_CATEGORY);
+        mFilmsStorage.addFilms(filmsInTheatre, FilmCategory.IN_THEATRES);
 
-        Fetch(FilmCategory.MOST_POPULAR, GET_MOST_POPULAR_URL);
+        List<Film> mostPopularFilms = getMostPopularFilms(NUMBER_OF_FILMS_IN_CATEGORY);
+        mFilmsStorage.addFilms(mostPopularFilms, FilmCategory.MOST_POPULAR);
     }
 
-    private void Fetch(FilmCategory category, String sourceUrl) throws IOException {
+    private List<Film> Fetch(String sourceUrl) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -95,15 +98,15 @@ public class TheMovieDbFilmsServiceImpl implements FilmsService {
         String body = response.body().string();
         Gson gson = new Gson();
         SearchResponse searchResponse = gson.fromJson(body, SearchResponse.class);
-        List<Film> filmsInTheatre = searchResponse.getResults();
-        for (Film film : filmsInTheatre) {
+        List<Film> films = searchResponse.getResults();
+        for (Film film : films) {
             String posterFullUrl = MessageFormat.format(IMAGE_SERVER_URL, IMAGE_SIZE_SMALL, film.getCoverPath());
             film.setCoverPath(posterFullUrl);
 
             String backdropFullUrl = MessageFormat.format(IMAGE_SERVER_URL, IMAGE_SIZE_MEDIUM, film.getBackdropPath());
             film.setBackdropPath(backdropFullUrl);
-
-            mFilmsStorage.addFilm(new FilmAdapterData(category, film));
         }
+
+        return films;
     }
 }

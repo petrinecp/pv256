@@ -28,7 +28,13 @@ public class FilmsStorage {
         return mFilms.get(index);
     }
 
-    public void addFilm(FilmAdapterData film) {
-        mFilms.add(film);
+    public void addFilms(List<Film> films, FilmCategory category) {
+        for (Film film : films) {
+            mFilms.add(new FilmAdapterData(category, film));
+        }
+    }
+
+    public  void clear() {
+        mFilms.clear();
     }
 }
