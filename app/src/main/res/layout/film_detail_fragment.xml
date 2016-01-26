@@ -1,90 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-<LinearLayout android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-    <RelativeLayout
-        android:id="@+id/header"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="vertical"
-        android:background="?attr/colorPrimary">
+        android:layout_height="match_parent">
 
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
         <RelativeLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:layout_height="300dp"
+            android:orientation="vertical"
+            android:background="?attr/colorPrimary">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/backdrop" />
+                android:layout_height="160dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/backdrop" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="160dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Large Text"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:id="@+id/filmTitle"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginLeft="170dp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:id="@+id/releaseDate"
+                    android:layout_below="@+id/filmTitle"
+                    android:layout_alignLeft="@+id/filmTitle"
+                    android:layout_alignStart="@+id/filmTitle"
+                    android:layout_marginTop="5dp"/>
+            </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="195dp"
+                    android:id="@+id/posterDetail"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="90dp" />
+
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/body"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginTop="160dp">
-
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:textColor="@android:color/primary_text_dark"
-                android:id="@+id/filmTitle"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="170dp"
-                android:layout_marginLeft="170dp"
-                android:layout_marginTop="10dp"/>
+                android:text="@string/overview"
+                android:id="@+id/overviewHeading"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:textColor="@android:color/primary_text_dark"
-                android:id="@+id/releaseDate"
-                android:layout_below="@+id/filmTitle"
-                android:layout_alignLeft="@+id/filmTitle"
-                android:layout_alignStart="@+id/filmTitle"
-                android:layout_marginTop="5dp"/>
+                android:text="New Text"
+                android:id="@+id/filmOverview"
+                android:layout_below="@+id/overviewHeading"
+                android:layout_alignLeft="@+id/overviewHeading"
+                android:layout_alignStart="@+id/overviewHeading"
+                android:layout_marginLeft="5dp"/>
         </RelativeLayout>
 
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="195dp"
-                android:id="@+id/posterDetail"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="90dp" />
+    </LinearLayout>
 
-    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_add_white_48dp"
+        app:layout_anchor="@id/header"
+        app:layout_anchorGravity="bottom|right|end"
+        android:scrollIndicators="bottom"/>
 
-    <LinearLayout
-        android:id="@+id/body"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" />
-
-</LinearLayout>
-
-<android.support.design.widget.FloatingActionButton
-    android:id="@+id/fab"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:clickable="true"
-    android:src="@drawable/ic_add_white_48dp"
-    app:layout_anchor="@id/header"
-    app:layout_anchorGravity="bottom|right|end"
-    android:scrollIndicators="bottom"/>
-
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</ScrollView>

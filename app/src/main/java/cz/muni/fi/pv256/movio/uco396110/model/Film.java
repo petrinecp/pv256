@@ -30,6 +30,9 @@ public class Film implements Parcelable {
     @SerializedName("backdrop_path")
     private String mBackdropPath;
 
+    @SerializedName("overview")
+    private String mOverview;
+
     public Film(String title, String dateString, String coverPath) {
         mTitle = title;
         mReleaseDateString = dateString;
@@ -78,6 +81,14 @@ public class Film implements Parcelable {
 
     public void setBackdropPath(String backdropPath) {
         mBackdropPath = backdropPath;
+    }
+
+    public String getOverview() {
+        return mOverview;
+    }
+
+    public void setOverview(String overview) {
+        mOverview = overview;
     }
 
     @Override

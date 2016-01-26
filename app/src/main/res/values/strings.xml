@@ -4,4 +4,5 @@
     <string name="empty_message">No items yet</string>
     <string name="header_in_theatres">In Theatres Now</string>
     <string name="header_most_popular">Most Popular</string>
+    <string name="overview">Overview</string>
 </resources>

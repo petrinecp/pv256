@@ -77,6 +77,9 @@ public class FilmDetailFragment extends Fragment {
         TextView filmReleaseDateTextView = (TextView) getView().findViewById(R.id.releaseDate);
         filmReleaseDateTextView.setText(String.valueOf(film.getLocalizedReleaseDate()));
 
+        TextView filmOverviewTextView = (TextView) getView().findViewById(R.id.filmOverview);
+        filmOverviewTextView.setText(film.getOverview());
+
         mCurrentFilm = selectedFilm;
     }
 

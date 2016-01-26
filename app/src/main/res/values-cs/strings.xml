@@ -5,4 +5,5 @@
     <string name="empty_message">Žádné data</string>
     <string name="header_in_theatres">Teď v kinách</string>
     <string name="header_most_popular">Nejpopulárnější</string>
+    <string name="overview">Obsah</string>
 </resources>
