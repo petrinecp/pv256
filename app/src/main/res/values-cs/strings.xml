@@ -6,4 +6,6 @@
     <string name="header_in_theatres">Teď v kinách</string>
     <string name="header_most_popular">Nejpopulárnější</string>
     <string name="overview">Obsah</string>
+    <string name="no_connection">Žádné přípojení.</string>
+    <string name="download_fail">Dáta se nepodařilo stáhnout.</string>
 </resources>

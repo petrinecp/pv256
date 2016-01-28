@@ -2,27 +2,58 @@ package cz.muni.fi.pv256.movio.uco396110.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
+import cz.muni.fi.pv256.movio.uco396110.DownloadResultReceiver;
 import cz.muni.fi.pv256.movio.uco396110.FilmAdapter;
+import cz.muni.fi.pv256.movio.uco396110.FilmCategory;
 import cz.muni.fi.pv256.movio.uco396110.FilmsStorage;
 import cz.muni.fi.pv256.movio.uco396110.R;
-import cz.muni.fi.pv256.movio.uco396110.service.FilmsService;
-import cz.muni.fi.pv256.movio.uco396110.service.TheMovieDbFilmsServiceImpl;
+import cz.muni.fi.pv256.movio.uco396110.model.Film;
+import cz.muni.fi.pv256.movio.uco396110.service.FilmsIntentService;
 
-public class FilmsFragment extends Fragment {
+public class FilmsFragment extends Fragment implements DownloadResultReceiver.Receiver {
     private FilmAdapter mAdapter;
-    private Activity mActivity;
-    private FilmsLoaderTask mLoader;
     private OnFilmSelectedListener mCallback;
+    private DownloadResultReceiver mReceiver;
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        switch (resultCode) {
+            case FilmsIntentService.STATUS_RUNNING:
+//                setProgressBarIndeterminateVisibility(true);
+                break;
+            case FilmsIntentService.STATUS_FINISHED:
+                /* Hide progress & extract result from bundle */
+//                setProgressBarIndeterminateVisibility(false);
+                FilmsStorage filmsStorage = FilmsStorage.getInstance();
+
+                ArrayList<Film> results = resultData.getParcelableArrayList(FilmsIntentService.FILMS_IN_THEATRE_ARG);
+                filmsStorage.addFilms(results, FilmCategory.IN_THEATRES);
+
+                results = resultData.getParcelableArrayList(FilmsIntentService.MOST_POPULAR_FILMS_ARG);
+                FilmsStorage.getInstance().addFilms(results, FilmCategory.MOST_POPULAR);
+
+                /* Update ListView with result */
+                mAdapter.notifyDataSetChanged();
+                break;
+            case FilmsIntentService.STATUS_ERROR:
+                /* Handle the error */
+                String error = resultData.getString(Intent.EXTRA_TEXT);
+                Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 
     public interface OnFilmSelectedListener {
         void onFilmSelected(int position);
@@ -32,7 +63,6 @@ public class FilmsFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = activity;
 
         try {
             mCallback = (OnFilmSelectedListener) activity;
@@ -73,51 +103,16 @@ public class FilmsFragment extends Fragment {
             }
         });
 
+        mReceiver = new DownloadResultReceiver(new Handler());
+        mReceiver.setReceiver(this);
+
         if (mAdapter.getCount() == 0) {
-            // start loading
-            mLoader = new FilmsLoaderTask(new TheMovieDbFilmsServiceImpl());
-            mLoader.execute();
+            /* Starting Download Service */
+            Intent intent = new Intent(Intent.ACTION_SYNC, null, getActivity(), FilmsIntentService.class);
+            intent.putExtra("receiver", mReceiver);
+            getActivity().startService(intent);
         }
 
         return view;
-    }
-
-    @Override
-    public void onDetach() {
-        // cancel the loader if it is running
-        if(mLoader != null) {
-            mLoader.cancel(true);
-        }
-
-        mActivity = null;
-        super.onDetach();
-    }
-
-    private class FilmsLoaderTask extends AsyncTask<String, Void, String> {
-
-        private FilmsService mFilmsService;
-
-        public FilmsLoaderTask(FilmsService filmsService) {
-            mFilmsService = filmsService;
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                mFilmsService.Update();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if(mActivity != null) {
-                // notify the adapter
-                mAdapter.notifyDataSetChanged();
-            }
-        }
     }
 }

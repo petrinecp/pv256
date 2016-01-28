@@ -97,7 +97,8 @@
                 android:layout_below="@+id/overviewHeading"
                 android:layout_alignLeft="@+id/overviewHeading"
                 android:layout_alignStart="@+id/overviewHeading"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="10dp"/>
         </RelativeLayout>
 
     </LinearLayout>

@@ -5,4 +5,6 @@
     <string name="header_in_theatres">In Theatres Now</string>
     <string name="header_most_popular">Most Popular</string>
     <string name="overview">Overview</string>
+    <string name="no_connection">No connection.</string>
+    <string name="download_fail">Failed to download data.</string>
 </resources>

@@ -1,10 +1,7 @@
 package cz.muni.fi.pv256.movio.uco396110.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -17,8 +14,6 @@ import com.squareup.picasso.Picasso;
 
 import cz.muni.fi.pv256.movio.uco396110.R;
 import cz.muni.fi.pv256.movio.uco396110.model.Film;
-import cz.muni.fi.pv256.movio.uco396110.service.FilmsService;
-import cz.muni.fi.pv256.movio.uco396110.service.TheMovieDbFilmsServiceImpl;
 
 public class FilmDetailFragment extends Fragment {
     public final static String ARG_FILM = "SelectedFilm";
@@ -34,7 +29,7 @@ public class FilmDetailFragment extends Fragment {
             mCurrentFilm = savedInstanceState.getParcelable(ARG_FILM);
         }
 
-//        FilmsService filmsService = new TheMovieDbFilmsServiceImpl();
+//        FilmsBasicService filmsService = new TheMovieDbFilmsServiceImpl();
 //        if (mCurrentFilm == null && filmsService.getFilmsCount() > 0) {
 //            mCurrentFilm = FilmsStore.sFilms[0].getFilm();
 //        }

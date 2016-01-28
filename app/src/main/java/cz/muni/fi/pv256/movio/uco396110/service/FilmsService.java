@@ -1,14 +1,15 @@
 package cz.muni.fi.pv256.movio.uco396110.service;
 
-import java.io.IOException;
-import java.util.List;
-
-import cz.muni.fi.pv256.movio.uco396110.model.Film;
+import cz.muni.fi.pv256.movio.uco396110.model.Films;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface FilmsService {
-    List<Film> getFilmsInTheatre() throws IOException;
-    List<Film> getMostPopularFilms() throws IOException;
-    Film getFilm(int index);
-    int getFilmsCount();
-    void Update() throws IOException;
+
+    @GET("3/discover/movie")
+    Call<Films> getFilmsByReleaseDateRange(@Query("primary_release_date.gte") String fromDate, @Query("primary_release_date.lte") String toDate);
+
+    @GET("3/discover/movie")
+    Call<Films> getFilms(@Query("sort_by") String sortBy);
 }

@@ -72,7 +72,6 @@ public class FilmAdapter extends BaseAdapter implements StickyGridHeadersSimpleA
                 break;
         }
 
-        // set header text as first char in string
         holder.textView.setText(headerText);
 
         return convertView;

@@ -2,19 +2,15 @@ package cz.muni.fi.pv256.movio.uco396110;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-
 import cz.muni.fi.pv256.movio.uco396110.fragments.FilmDetailFragment;
 import cz.muni.fi.pv256.movio.uco396110.fragments.FilmsFragment;
-import cz.muni.fi.pv256.movio.uco396110.service.FilmsService;
+import cz.muni.fi.pv256.movio.uco396110.service.FilmsBasicService;
 import cz.muni.fi.pv256.movio.uco396110.service.TheMovieDbFilmsServiceImpl;
 
 public class MainActivity extends AppCompatActivity implements FilmsFragment.OnFilmSelectedListener {
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements FilmsFragment.OnF
 
     @Override
     public void onFilmSelected(int position) {
-        FilmsService filmsService = new TheMovieDbFilmsServiceImpl();
+        FilmsBasicService filmsService = new TheMovieDbFilmsServiceImpl();
         Parcelable selectedFilm = filmsService.getFilm(position);
 
         FilmDetailFragment filmDetailFragment = (FilmDetailFragment) getFragmentManager().findFragmentById(R.id.movie_detail_fragment);
@@ -115,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements FilmsFragment.OnF
 //
 //    public void startTask() {
 //        if (mDownloadFilmsTask == null) {
-//            FilmsService filmsService = new TheMovieDbFilmsServiceImpl();
+//            FilmsBasicService filmsService = new TheMovieDbFilmsServiceImpl();
 //            mDownloadFilmsTask = new DownloadFilmsTask(MainActivity.this, filmsService);
 //            mDownloadFilmsTask.execute();
 //        }
@@ -128,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements FilmsFragment.OnF
 //    private static class DownloadFilmsTask extends AsyncTask<String, Void, String> {
 //
 //        private final WeakReference<MainActivity> mActivityWeakReference;
-//        private FilmsService mFilmsService;
+//        private FilmsBasicService mFilmsService;
 //
-//        public DownloadFilmsTask(MainActivity mainActivity, FilmsService filmsService) {
+//        public DownloadFilmsTask(MainActivity mainActivity, FilmsBasicService filmsService) {
 //            mActivityWeakReference = new WeakReference<>(mainActivity);
 //            mFilmsService = filmsService;
 //        }
