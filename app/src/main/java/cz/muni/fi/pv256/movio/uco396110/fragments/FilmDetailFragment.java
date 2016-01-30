@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,19 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Locale;
+
 import cz.muni.fi.pv256.movio.uco396110.R;
+import cz.muni.fi.pv256.movio.uco396110.data.FilmManagerImpl;
 import cz.muni.fi.pv256.movio.uco396110.model.Film;
 
 public class FilmDetailFragment extends Fragment {
     public final static String ARG_FILM = "SelectedFilm";
-    private Parcelable mCurrentFilm = null;
+    private Film mCurrentFilm = null;
+    private FilmManagerImpl mFilmManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,13 +37,29 @@ public class FilmDetailFragment extends Fragment {
             mCurrentFilm = savedInstanceState.getParcelable(ARG_FILM);
         }
 
-//        FilmsBasicService filmsService = new TheMovieDbFilmsServiceImpl();
-//        if (mCurrentFilm == null && filmsService.getFilmsCount() > 0) {
-//            mCurrentFilm = FilmsStore.sFilms[0].getFilm();
-//        }
+        mFilmManager = new FilmManagerImpl(getActivity());
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.film_detail_fragment, container, false);
+        View view = inflater.inflate(R.layout.film_detail_fragment, container, false);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentFilm != null) {
+                    FloatingActionButton fab = (FloatingActionButton) v;
+
+                    if (mCurrentFilm.getId() != null) {
+                        mFilmManager.deleteFilm(mCurrentFilm);
+                        fab.setImageResource(R.drawable.ic_add_white_48dp);
+                    } else {
+                        mFilmManager.createFilm(mCurrentFilm);
+                        fab.setImageResource(R.drawable.clear);
+                    }
+                }
+            }
+        });
+
+        return view;
     }
 
     @Override
@@ -70,12 +94,22 @@ public class FilmDetailFragment extends Fragment {
         filmTitleTextView.setText(film.getTitle());
 
         TextView filmReleaseDateTextView = (TextView) getView().findViewById(R.id.releaseDate);
-        filmReleaseDateTextView.setText(String.valueOf(film.getLocalizedReleaseDate()));
+
+        filmReleaseDateTextView.setText(film.getReleaseDate().toString(DateTimeFormat.mediumDate().withLocale(Locale.getDefault())));
 
         TextView filmOverviewTextView = (TextView) getView().findViewById(R.id.filmOverview);
         filmOverviewTextView.setText(film.getOverview());
 
-        mCurrentFilm = selectedFilm;
+        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
+        Film filmInDatabase = mFilmManager.getFilmByTitle(film.getTitle());
+        if (filmInDatabase != null) {
+            film.setId(filmInDatabase.getId());
+            fab.setImageResource(R.drawable.clear);
+        } else {
+            fab.setImageResource(R.drawable.ic_add_white_48dp);
+        }
+
+        mCurrentFilm = film;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package cz.muni.fi.pv256.movio.uco396110.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import cz.muni.fi.pv256.movio.uco396110.AuthInterceptor;
 
 public class FilmServiceFactory {
@@ -11,6 +14,8 @@ public class FilmServiceFactory {
     }
 
     public static FilmsService create() {
-        return ServiceFactory.createService(FilmsService.class, SERVER_URL, new AuthInterceptor(API_KEY));
+        AuthInterceptor authInterceptor = new AuthInterceptor(API_KEY);
+
+        return ServiceFactory.createService(FilmsService.class, SERVER_URL, authInterceptor);
     }
 }

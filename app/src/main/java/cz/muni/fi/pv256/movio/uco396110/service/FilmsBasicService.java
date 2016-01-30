@@ -8,7 +8,6 @@ import cz.muni.fi.pv256.movio.uco396110.model.Film;
 public interface FilmsBasicService {
     List<Film> getFilmsInTheatre() throws IOException;
     List<Film> getMostPopularFilms() throws IOException;
-    Film getFilm(int index);
     int getFilmsCount();
     void Update() throws IOException;
 }

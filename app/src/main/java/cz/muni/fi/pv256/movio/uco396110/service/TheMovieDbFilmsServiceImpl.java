@@ -10,13 +10,14 @@ import java.util.List;
 
 import cz.muni.fi.pv256.movio.uco396110.FilmCategory;
 import cz.muni.fi.pv256.movio.uco396110.FilmsStorage;
+import cz.muni.fi.pv256.movio.uco396110.data.FilmManager;
 import cz.muni.fi.pv256.movio.uco396110.model.Film;
 import cz.muni.fi.pv256.movio.uco396110.model.SearchResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class TheMovieDbFilmsServiceImpl implements FilmsBasicService {
+public class TheMovieDbFilmsServiceImpl implements FilmsBasicService, FilmManager {
     private static final String SERVER_URL = "https://api.themoviedb.org/";
     private static final String API_KEY = "92dbd1480449551071ed308156bc7c53";
     private static final String API_KEY_PARAM = "api_key";
@@ -63,9 +64,9 @@ public class TheMovieDbFilmsServiceImpl implements FilmsBasicService {
     }
 
     @Override
-    public Film getFilm(int index) {
+    public Film getFilm(Long index) {
         FilmsStorage filmsStorage = FilmsStorage.getInstance();
-        return filmsStorage.getFilm(index).getFilm();
+        return filmsStorage.getFilm(index.intValue()).getFilm();
     }
 
     @Override

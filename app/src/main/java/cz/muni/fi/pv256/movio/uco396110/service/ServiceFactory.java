@@ -1,5 +1,8 @@
 package cz.muni.fi.pv256.movio.uco396110.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.GsonConverterFactory;
@@ -12,6 +15,7 @@ public class ServiceFactory {
     }
 
     public static <S> S createService(Class<S> serviceClass, String baseUrl, Interceptor authInterceptor) {
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(authInterceptor)
                 .build();

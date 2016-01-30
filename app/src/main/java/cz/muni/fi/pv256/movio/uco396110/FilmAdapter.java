@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -79,7 +80,6 @@ public class FilmAdapter extends BaseAdapter implements StickyGridHeadersSimpleA
 
     private static class ViewHolder {
         ImageView imageView;
-//        TextView textView;
     }
 
     @Override

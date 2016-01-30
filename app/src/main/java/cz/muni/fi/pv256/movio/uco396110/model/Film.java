@@ -1,28 +1,25 @@
 package cz.muni.fi.pv256.movio.uco396110.model;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 public class Film implements Parcelable {
     private static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
-    private long mReleaseDate;
+    private DateTime mReleaseDate;
+
+    private transient Long id;
 
     @SerializedName("original_title")
     private String mTitle;
 
     @SerializedName("release_date")
     private String mReleaseDateString;
-
-    private String mLocalizedReleaseDate;
 
     @SerializedName("poster_path")
     private String mCoverPath;
@@ -33,38 +30,41 @@ public class Film implements Parcelable {
     @SerializedName("overview")
     private String mOverview;
 
+    public Film() {}
+
     public Film(String title, String dateString, String coverPath) {
         mTitle = title;
         mReleaseDateString = dateString;
         mCoverPath = coverPath;
     }
 
-    public long getReleaseDate() {
-        if (mReleaseDate == 0) {
-            SimpleDateFormat f = new SimpleDateFormat(DATE_FORMAT_STRING);
-            long milliseconds;
-            try {
-                Date d = f.parse(mReleaseDateString);
-                milliseconds = d.getTime();
-            } catch (ParseException e) {
-                milliseconds = 0;
-            }
-            mReleaseDate = milliseconds;
-        }
+    //<editor-fold desc="Getters and Setters">
+    public Long getId() {
+        return id;
+    }
 
-        return mReleaseDate;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
         return mTitle;
     }
 
-    public String getLocalizedReleaseDate() {
-        DateFormat formatter = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
-        String localPattern  = ((SimpleDateFormat)formatter).toLocalizedPattern();
-        Date date = new Date(getReleaseDate());
-        SimpleDateFormat df = new SimpleDateFormat(localPattern);
-        return df.format(date);
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    public DateTime getReleaseDate() {
+        if (mReleaseDate == null) {
+            mReleaseDate = DateTime.parse(mReleaseDateString, DateTimeFormat.forPattern(DATE_FORMAT_STRING));
+        }
+
+        return mReleaseDate;
+    }
+
+    public void setReleaseDate(DateTime releaseDate) {
+        mReleaseDate = releaseDate;
     }
 
     public String getCoverPath() {
@@ -90,12 +90,9 @@ public class Film implements Parcelable {
     public void setOverview(String overview) {
         mOverview = overview;
     }
+    //</editor-fold>
 
-    @Override
-    public String toString() {
-        return mTitle;
-    }
-
+    //<editor-fold desc="Parcelable">
     @Override
     public int describeContents() {
         return 0;
@@ -103,15 +100,19 @@ public class Film implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.mReleaseDate);
-        dest.writeString(this.mCoverPath);
-        dest.writeString(this.mTitle);
+        dest.writeString(mTitle);
+        dest.writeLong(mReleaseDate.getMillis());
+        dest.writeString(mOverview);
+        dest.writeString(mCoverPath);
+        dest.writeString(mBackdropPath);
     }
 
     protected Film(Parcel in) {
-        this.mReleaseDate = in.readLong();
-        this.mCoverPath = in.readString();
-        this.mTitle = in.readString();
+        mTitle = in.readString();
+        mReleaseDate = new DateTime(in.readLong());
+        mOverview = in.readString();
+        mCoverPath = in.readString();
+        mBackdropPath = in.readString();
     }
 
     public static final Parcelable.Creator<Film> CREATOR = new Parcelable.Creator<Film>() {
@@ -123,4 +124,10 @@ public class Film implements Parcelable {
             return new Film[size];
         }
     };
+    //</editor-fold>
+
+    @Override
+    public String toString() {
+        return mTitle;
+    }
 }

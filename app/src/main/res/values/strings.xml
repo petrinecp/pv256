@@ -7,4 +7,6 @@
     <string name="overview">Overview</string>
     <string name="no_connection">No connection.</string>
     <string name="download_fail">Failed to download data.</string>
+    <string name="action_favorites">Favorites</string>
+    <string name="action_discover">Discover</string>
 </resources>

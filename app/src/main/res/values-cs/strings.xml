@@ -8,4 +8,5 @@
     <string name="overview">Obsah</string>
     <string name="no_connection">Žádné přípojení.</string>
     <string name="download_fail">Dáta se nepodařilo stáhnout.</string>
+    <string name="action_favorites">Oblíbené</string>
 </resources>
