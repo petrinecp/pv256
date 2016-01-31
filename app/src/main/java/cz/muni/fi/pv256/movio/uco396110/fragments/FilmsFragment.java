@@ -74,17 +74,6 @@ public class FilmsFragment extends Fragment implements DownloadResultReceiver.Re
         }
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//
-//        try {
-//            mCallback = (OnFilmSelectedListener) context;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(context.toString() + " must implement OnFilmSelectedListener");
-//        }
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
