@@ -117,8 +117,8 @@
     <orderEntry type="library" exported="" name="android.joda-2.9.2" level="project" />
     <orderEntry type="library" exported="" name="retrofit-2.0.0-beta3" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.9.2-no-tzdb" level="project" />
-    <orderEntry type="library" exported="" name="stickygridheaders-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="converter-gson-2.0.0-beta3" level="project" />
+    <orderEntry type="library" exported="" name="stickygridheaders-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="design-23.0.1" level="project" />

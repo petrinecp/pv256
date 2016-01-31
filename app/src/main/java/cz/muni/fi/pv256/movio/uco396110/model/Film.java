@@ -32,9 +32,10 @@ public class Film implements Parcelable {
 
     public Film() {}
 
-    public Film(String title, String dateString, String coverPath) {
+    public Film(String title, String dateString, String overview, String coverPath) {
         mTitle = title;
         mReleaseDateString = dateString;
+        mOverview = overview;
         mCoverPath = coverPath;
     }
 
