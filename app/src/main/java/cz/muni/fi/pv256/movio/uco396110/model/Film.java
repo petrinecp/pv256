@@ -42,9 +42,9 @@ public class Film implements Parcelable {
     }
 
     public boolean updateState(Film updatedFilm) {
-        boolean hasBeenUpdated = false;
+        boolean hasBeenUpdated;
 
-        if (hasBeenUpdated |= !mTitle.equals(updatedFilm.getTitle())) {
+        if (hasBeenUpdated = !mTitle.equals(updatedFilm.getTitle())) {
             mTitle = updatedFilm.getTitle();
         }
         if (hasBeenUpdated |= !getReleaseDate().equals(updatedFilm.getReleaseDate())) {
@@ -133,7 +133,6 @@ public class Film implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
         dest.writeLong(mRemoteId);
         dest.writeString(mTitle);
         dest.writeLong(mReleaseDate.getMillis());
@@ -143,7 +142,6 @@ public class Film implements Parcelable {
     }
 
     protected Film(Parcel in) {
-        id = in.readLong();
         mRemoteId = in.readLong();
         mTitle = in.readString();
         mReleaseDate = new DateTime(in.readLong());

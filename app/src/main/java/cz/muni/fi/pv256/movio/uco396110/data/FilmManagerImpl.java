@@ -64,15 +64,14 @@ public class FilmManagerImpl implements FilmManager {
         }
 
         Cursor cursor = mContext.getContentResolver().query(FilmEntry.CONTENT_URI, FILM_COLUMNS, WHERE_TITLE, new String[] { title }, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            Film film;
+        if (cursor != null) {
             try {
-                film = FilmDbHelper.getFilm(cursor);
+                if (cursor.moveToFirst()) {
+                    return FilmDbHelper.getFilm(cursor);
+                }
             } finally {
                 cursor.close();
             }
-
-            return film;
         }
 
         return null;
