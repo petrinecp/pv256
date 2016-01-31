@@ -45,6 +45,7 @@ public class FilmContract {
 
         public static final String TABLE_NAME = "films";
 
+        public static final String COLUMN_REMOTE_ID = "remote_id";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_RELEASE_DATE_TEXT = "release_date";
         public static final String COLUMN_OVERVIEW = "overview";

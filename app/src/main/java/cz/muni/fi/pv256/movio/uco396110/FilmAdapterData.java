@@ -1,7 +1,5 @@
 package cz.muni.fi.pv256.movio.uco396110;
 
-import android.graphics.Bitmap;
-
 import cz.muni.fi.pv256.movio.uco396110.model.Film;
 
 public class FilmAdapterData {

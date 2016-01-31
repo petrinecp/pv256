@@ -17,10 +17,8 @@ import android.widget.GridView;
 import cz.muni.fi.pv256.movio.uco396110.ActionsListener;
 import cz.muni.fi.pv256.movio.uco396110.FilmsCursorAdapter;
 import cz.muni.fi.pv256.movio.uco396110.R;
-import cz.muni.fi.pv256.movio.uco396110.data.FilmContract;
 import cz.muni.fi.pv256.movio.uco396110.data.FilmContract.FilmEntry;
 import cz.muni.fi.pv256.movio.uco396110.data.FilmManagerImpl;
-import cz.muni.fi.pv256.movio.uco396110.model.Film;
 
 public class FilmsFavoritesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private CursorAdapter mAdapter;

@@ -26,6 +26,7 @@ public class FilmsCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        //TODO ViewHolderPatter
 //        if (convertView == null) {
 //            if(BuildConfig.LOGGING_ENABLED) {
 //                Log.i("", "inflate radku " + position);

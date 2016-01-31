@@ -102,14 +102,24 @@ public class FilmsIntentService extends IntentService {
     }
 
     private ArrayList<Film> getFilmsWithAbsoluteImagePaths(Films films) {
-        for (Film film : films.getResults()) {
-            String posterFullUrl = MessageFormat.format(IMAGE_SERVER_URL, IMAGE_SIZE_SMALL, film.getCoverPath());
-            film.setCoverPath(posterFullUrl);
+        return getFilmsWithAbsoluteImagePaths(films.getResults());
+    }
 
-            String backdropFullUrl = MessageFormat.format(IMAGE_SERVER_URL, IMAGE_SIZE_MEDIUM, film.getBackdropPath());
-            film.setBackdropPath(backdropFullUrl);
+    public static ArrayList<Film> getFilmsWithAbsoluteImagePaths(ArrayList<Film> films) {
+        for (Film film : films) {
+            getFilmWithAbsoluteImagePaths(film);
         }
 
-        return films.getResults();
+        return films;
+    }
+
+    public static Film getFilmWithAbsoluteImagePaths(Film film) {
+        String posterFullUrl = MessageFormat.format(IMAGE_SERVER_URL, IMAGE_SIZE_SMALL, film.getCoverPath());
+        film.setCoverPath(posterFullUrl);
+
+        String backdropFullUrl = MessageFormat.format(IMAGE_SERVER_URL, IMAGE_SIZE_MEDIUM, film.getBackdropPath());
+        film.setBackdropPath(backdropFullUrl);
+
+        return film;
     }
 }

@@ -9,4 +9,6 @@
     <string name="no_connection">Žiadne pripojenie.</string>
     <string name="download_fail">Dáta sa nepodarilo stiahnut.</string>
     <string name="action_favorites">Obľúbené</string>
+    <string name="action_discover">Novinky</string>
+    <string name="sync_finished">Databáza bola aktualizovaná.</string>
 </resources>

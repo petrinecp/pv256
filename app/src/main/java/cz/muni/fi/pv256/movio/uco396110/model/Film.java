@@ -2,7 +2,6 @@ package cz.muni.fi.pv256.movio.uco396110.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -14,6 +13,9 @@ public class Film implements Parcelable {
     private DateTime mReleaseDate;
 
     private transient Long id;
+
+    @SerializedName("id")
+    private Long mRemoteId;
 
     @SerializedName("original_title")
     private String mTitle;
@@ -39,6 +41,28 @@ public class Film implements Parcelable {
         mCoverPath = coverPath;
     }
 
+    public boolean updateState(Film updatedFilm) {
+        boolean hasBeenUpdated = false;
+
+        if (hasBeenUpdated |= !mTitle.equals(updatedFilm.getTitle())) {
+            mTitle = updatedFilm.getTitle();
+        }
+        if (hasBeenUpdated |= !getReleaseDate().equals(updatedFilm.getReleaseDate())) {
+            mReleaseDate = updatedFilm.getReleaseDate();
+        }
+        if (hasBeenUpdated |= !mOverview.equals(updatedFilm.getOverview())) {
+            mOverview = updatedFilm.getOverview();
+        }
+        if (hasBeenUpdated |= !getCoverPath().equals(updatedFilm.getCoverPath())) {
+            mCoverPath = updatedFilm.getCoverPath();
+        }
+        if (hasBeenUpdated |= !getBackdropPath().equals(updatedFilm.getBackdropPath())) {
+            mBackdropPath = updatedFilm.getBackdropPath();
+        }
+
+        return hasBeenUpdated;
+    }
+
     //<editor-fold desc="Getters and Setters">
     public Long getId() {
         return id;
@@ -46,6 +70,14 @@ public class Film implements Parcelable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getRemoteId() {
+        return mRemoteId;
+    }
+
+    public void setRemoteId(Long remoteId) {
+        mRemoteId = remoteId;
     }
 
     public String getTitle() {
@@ -101,6 +133,8 @@ public class Film implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeLong(mRemoteId);
         dest.writeString(mTitle);
         dest.writeLong(mReleaseDate.getMillis());
         dest.writeString(mOverview);
@@ -109,6 +143,8 @@ public class Film implements Parcelable {
     }
 
     protected Film(Parcel in) {
+        id = in.readLong();
+        mRemoteId = in.readLong();
         mTitle = in.readString();
         mReleaseDate = new DateTime(in.readLong());
         mOverview = in.readString();
@@ -127,8 +163,26 @@ public class Film implements Parcelable {
     };
     //</editor-fold>
 
+    //<editor-fold desc="Equals, HashCode & ToString">
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Film film = (Film) o;
+
+        return !(id != null ? !id.equals(film.id) : film.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
     @Override
     public String toString() {
         return mTitle;
     }
+    //</editor-fold>
 }

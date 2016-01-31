@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by peter on  20.1. .
- */
 public class SearchResponse {
     @SerializedName("results")
     private List<Film> results;

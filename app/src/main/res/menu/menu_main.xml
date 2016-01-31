@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item
+        android:id="@+id/action_sync"
+        android:icon="@android:drawable/stat_notify_sync_noanim"
+        android:title="@string/action_sync"
+        app:showAsAction="ifRoom"/>
     <group android:checkableBehavior="single">
         <item android:id="@+id/action_discover" android:title="@string/action_discover"
               android:orderInCategory="100" app:showAsAction="never" android:checked="true" />

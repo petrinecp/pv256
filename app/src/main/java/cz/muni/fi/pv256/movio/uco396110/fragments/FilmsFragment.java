@@ -19,9 +19,7 @@ import cz.muni.fi.pv256.movio.uco396110.DownloadResultReceiver;
 import cz.muni.fi.pv256.movio.uco396110.FilmAdapter;
 import cz.muni.fi.pv256.movio.uco396110.FilmCategory;
 import cz.muni.fi.pv256.movio.uco396110.FilmsStorage;
-import cz.muni.fi.pv256.movio.uco396110.OnFilmSelectedListener;
 import cz.muni.fi.pv256.movio.uco396110.R;
-import cz.muni.fi.pv256.movio.uco396110.data.FilmManager;
 import cz.muni.fi.pv256.movio.uco396110.model.Film;
 import cz.muni.fi.pv256.movio.uco396110.service.FilmsIntentService;
 import cz.muni.fi.pv256.movio.uco396110.service.TheMovieDbFilmsServiceImpl;
@@ -48,10 +46,8 @@ public class FilmsFragment extends Fragment implements DownloadResultReceiver.Re
                 /* Update GridView with result */
                 mAdapter.notifyDataSetChanged();
 
-                if (getActivity().findViewById(R.id.fragment_container_large) != null) {
-                    if (mAdapter.getCount() > 0) {
-                        mCallback.onFilmsLoaded(new TheMovieDbFilmsServiceImpl(), mAdapter.getItemId(0));
-                    }
+                if (mAdapter.getCount() > 0) {
+                    mCallback.onFilmsLoaded(new TheMovieDbFilmsServiceImpl(), mAdapter.getItemId(0));
                 }
                 break;
             case FilmsIntentService.STATUS_ERROR:

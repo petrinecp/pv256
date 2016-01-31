@@ -9,4 +9,8 @@
     <string name="download_fail">Failed to download data.</string>
     <string name="action_favorites">Favorites</string>
     <string name="action_discover">Discover</string>
+    <string name="content_authority">cz.muni.fi.pv256.movio.uco396110.data</string>
+    <string name="sync_account_type">cz.muni.fi.pv256.movio.uco396110.sync.account</string>
+    <string name="action_sync">Synchronize</string>
+    <string name="sync_finished">Database has been updated.</string>
 </resources>
