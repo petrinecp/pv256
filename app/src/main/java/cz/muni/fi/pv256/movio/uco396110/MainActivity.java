@@ -77,11 +77,10 @@ public class MainActivity extends FilmActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        mCheckedMenuItemId = item.getItemId();
-        item.setChecked(true);
+        int id = item.getItemId();
         Resources resources = getResources();
         Fragment fragment = null;
-        switch (mCheckedMenuItemId) {
+        switch (id) {
             case R.id.action_sync:
                 setRefreshActionButtonState(true);
                 final Handler handler = new Handler();
@@ -94,10 +93,14 @@ public class MainActivity extends FilmActivity {
                 }, 2000);
                 return true;
             case R.id.action_favorites:
+                mCheckedMenuItemId = id;
+                item.setChecked(true);
                 setTitle(resources.getString(R.string.action_favorites));
                 fragment = new FilmsFavoritesFragment();
                 break;
             case R.id.action_discover:
+                mCheckedMenuItemId = id;
+                item.setChecked(true);
                 setTitle(resources.getString(R.string.action_discover));
                 fragment = new FilmsFragment();
                 break;
